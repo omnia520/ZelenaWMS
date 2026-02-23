@@ -1,0 +1,128 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║           INSTRUCCIONES PARA INSERTAR DATOS DE PRUEBA                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Tienes 3 opciones para insertar los datos de prueba:
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ OPCIÓN 1: Usar el script BAT (Windows - Más fácil)                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. Abre el archivo: ejecutar_seed.bat (doble click)
+2. Si tu PostgreSQL no está en C:\Program Files\PostgreSQL\15\bin\
+   Edita el archivo y cambia la ruta de PSQL_PATH
+3. Ingresa la contraseña de postgres cuando te la pida
+4. Listo!
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ OPCIÓN 2: Usar línea de comandos                                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Abre CMD o PowerShell y ejecuta:
+
+cd "C:\Users\mdtre\Proy John nuevo\back\database"
+"C:\Program Files\PostgreSQL\15\bin\psql.exe" -U postgres -d wms_db -f seed_actividades.sql
+
+(Ajusta la versión de PostgreSQL según tu instalación)
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ OPCIÓN 3: Usar pgAdmin o DBeaver (Recomendado si tienes problemas)          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. Abre pgAdmin o DBeaver
+2. Conecta a la base de datos "wms_db"
+3. Abre una ventana de Query/Consulta
+4. Abre el archivo "seed_actividades.sql" en un editor de texto
+5. Copia TODO el contenido
+6. Pégalo en la ventana de Query
+7. Ejecuta (F5 o botón Execute)
+8. Deberías ver el mensaje: "Datos de prueba insertados correctamente!"
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ¿QUÉ DATOS SE VAN A INSERTAR?                                               │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+✓ 6 usuarios nuevos (alistadores, empacadores, vendedor, jefe)
+✓ 5 clientes
+✓ 12 productos
+✓ 10 ubicaciones de almacén
+✓ Inventario en ubicaciones
+✓ 5 órdenes de venta en diferentes estados:
+  - 2 órdenes "Aprobadas" (listas para comenzar alistamiento)
+  - 1 orden "En_Alistamiento" (alistamiento parcial)
+  - 1 orden "Listo_Para_Empacar" (lista para comenzar empaque)
+  - 1 orden "En_Empaque" (empaque parcial)
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ USUARIOS PARA PROBAR LA APLICACIÓN                                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Todos tienen contraseña: password123
+
+┌─────────────────────────┬──────────────┬─────────────────────────────────────┐
+│ Email                   │ Rol          │ Para qué sirve                      │
+├─────────────────────────┼──────────────┼─────────────────────────────────────┤
+│ alistador1@wms.com      │ Alistador    │ Ver 2 órdenes para alistar          │
+│ alistador2@wms.com      │ Alistador    │ Ver 1 orden para alistar            │
+│ empacador1@wms.com      │ Empacador    │ Ver 1 orden para empacar            │
+│ empacador2@wms.com      │ Empacador    │ Ver 1 orden para empacar            │
+│ vendedor1@wms.com       │ Vendedor     │ Crear nuevas órdenes                │
+│ jefe@wms.com            │ Jefe_Bodega  │ Aprobar y asignar órdenes           │
+└─────────────────────────┴──────────────┴─────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ PRUEBA RÁPIDA DEL SISTEMA                                                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. Inicia el backend:
+   cd back
+   npm run dev
+
+2. Inicia el frontend:
+   cd front
+   npm run dev
+
+3. Ingresa con: alistador1@wms.com / password123
+
+4. Ve a "Actividades" en el menú lateral (el botón con el casco)
+
+5. Click en "Alistamiento"
+
+6. Verás 2 órdenes:
+   - ORD-2024-001 → Click en "Comenzar"
+   - ORD-2024-003 → Click en "Reanudar" (ya tiene progreso)
+
+7. Ingresa cantidades, guarda cada producto, verás los ✓ verdes
+
+8. Finaliza el alistamiento
+
+9. Prueba ahora con: empacador1@wms.com / password123
+   Ve a Actividades → Empaque
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ¿ALGO SALIÓ MAL?                                                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Si ves errores como "duplicate key" o "already exists":
+→ Algunos datos ya existen en tu base de datos
+→ El script tiene "ON CONFLICT DO NOTHING" para evitar duplicados
+→ No es un problema, continúa probando la app
+
+Si no aparecen las órdenes:
+→ Verifica que ejecutaste el script en la base de datos correcta (wms_db)
+→ Verifica que iniciaste sesión con el usuario correcto
+→ Las órdenes están asignadas por usuario_id
+
+¿Necesitas ayuda?
+→ Revisa el archivo README_SEED.md para más detalles
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          ¡LISTO PARA PROBAR!                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝

@@ -1,0 +1,19 @@
+{
+  "routes": [
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "*.{css,js,jpg,png,gif,svg,ico,json}"]
+  },
+  "platform": {
+    "apiRuntime": "node:16"
+  },
+  "globalHeaders": {
+    "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:"
+  }
+}

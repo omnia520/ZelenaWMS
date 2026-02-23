@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables (NEVER commit secrets)
+.env
+.env.local
+.env.production
+
+# Uploads / user-generated content
+back/uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp files
+tmpclaude-*
+nul
